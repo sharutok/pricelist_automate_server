@@ -1,0 +1,84 @@
+-25-07-2024 16:07:97---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 7.502 secs"}
+-----------
+-25-07-2024 16:07:03---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 7.325 secs"}
+-----------
+-25-07-2024 16:07:36---------
+{"len":2650,"obj":"spares","time_take":"Took 9.642 secs"}
+-----------
+-25-07-2024 16:07:63---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 5.498 secs"}
+-----------
+-25-07-2024 16:07:34---------
+{"len":2650,"obj":"spares","time_take":"Took 7.197 secs"}
+-----------
+-25-07-2024 16:07:17---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 6.97 secs"}
+-----------
+-25-07-2024 16:07:90---------
+{"len":2650,"obj":"spares","time_take":"Took 7.695 secs"}
+-----------
+-25-07-2024 16:07:01---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 4.731 secs"}
+-----------
+-25-07-2024 16:07:06---------
+{"len":2650,"obj":"spares","time_take":"Took 6.773 secs"}
+-----------
+-25-07-2024 16:07:51---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 5.771 secs"}
+-----------
+-25-07-2024 16:07:10---------
+{"len":2650,"obj":"spares","time_take":"Took 7.365 secs"}
+-----------
+-25-07-2024 16:07:97---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 8.915 secs"}
+-----------
+-25-07-2024 16:07:32---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 9.324 secs"}
+-----------
+-25-07-2024 16:07:86---------
+{"len":2650,"obj":"spares","time_take":"Took 10.804 secs"}
+-----------
+-25-07-2024 16:07:94---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 6.993 secs"}
+-----------
+-25-07-2024 16:07:05---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 7.079 secs"}
+-----------
+-25-07-2024 16:07:75---------
+{"len":2650,"obj":"spares","time_take":"Took 8.775 secs"}
+-----------
+-25-07-2024 16:07:26---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 6.531 secs"}
+-----------
+-25-07-2024 16:07:39---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 6.63 secs"}
+-----------
+-25-07-2024 16:07:33---------
+{"len":2650,"obj":"spares","time_take":"Took 7.564 secs"}
+-----------
+-25-07-2024 16:07:44---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 5.164 secs"}
+-----------
+-25-07-2024 16:07:38---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 6.072 secs"}
+-----------
+-25-07-2024 16:07:97---------
+{"len":2650,"obj":"spares","time_take":"Took 7.655 secs"}
+-----------
+-25-07-2024 16:07:30---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 4.231 secs"}
+-----------
+-25-07-2024 16:07:88---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 4.78 secs"}
+-----------
+-25-07-2024 16:07:34---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 5.919 secs"}
+-----------
+-25-07-2024 16:07:46---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 5.939 secs"}
+-----------
+-25-07-2024 16:07:85---------
+{"len":2650,"obj":"spares","time_take":"Took 7.315 secs"}
+-----------

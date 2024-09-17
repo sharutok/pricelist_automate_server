@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class price_list_electrode extends Model {
+  class price_list_spares extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  price_list_electrode.init({
+  price_list_spares.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -21,18 +21,18 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     index_order: DataTypes.INTEGER,
+    item: DataTypes.STRING(500),
+    product_code: DataTypes.STRING(500),
+    uom: DataTypes.STRING(500),
     item_code_index: DataTypes.INTEGER,
-    item_code: DataTypes.STRING,
-    classification: DataTypes.STRING,
-    brand_name: DataTypes.STRING,
-    size: DataTypes.STRING,
-    uom: DataTypes.STRING,
-    list_price_as_per_uom: DataTypes.STRING,
-    description_1: DataTypes.STRING,
+    list_price: DataTypes.STRING(500),
+    description_1: DataTypes.STRING(500),
+    description_2: DataTypes.STRING(500),
+    
   }, {
     sequelize,
-    modelName: 'price_list_electrode',
-    tableName: 'price_list_electrode',
+    modelName: 'price_list_spares',
   });
-  return price_list_electrode;
+  return price_list_spares;
 };
+

@@ -1,0 +1,9 @@
+-08-07-2024 16:07:95---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 4.769 secs"}
+-----------
+-08-07-2024 16:07:77---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 6.12 secs"}
+-----------
+-08-07-2024 16:07:69---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 5.27 secs"}
+-----------
