@@ -1,0 +1,39 @@
+-19-09-2024 14:09:42---------
+{"len":0,"obj":"hypertherm","time_take":"Took 3.351 secs"}
+-----------
+-19-09-2024 14:09:15---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 4.698 secs"}
+-----------
+-19-09-2024 14:09:16---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 5.173 secs"}
+-----------
+-19-09-2024 14:09:15---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 6.083 secs"}
+-----------
+-19-09-2024 14:09:50---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 6.768 secs"}
+-----------
+-19-09-2024 14:09:67---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 4.762 secs"}
+-----------
+-19-09-2024 14:09:66---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 5.133 secs"}
+-----------
+-19-09-2024 14:09:88---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 7.125 secs"}
+-----------
+-19-09-2024 14:09:65---------
+{"len":0,"obj":"wires_and_flux","time_take":"Took 6.255 secs"}
+-----------
+-19-09-2024 14:09:79---------
+{"len":0,"obj":"spares","time_take":"Took 7.396 secs"}
+-----------
+-19-09-2024 14:09:84---------
+{"len":0,"obj":"egp","time_take":"Took 9.439 secs"}
+-----------
+-19-09-2024 15:09:45---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 3.655 secs"}
+-----------
+-19-09-2024 15:09:21---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 4.347 secs"}
+-----------

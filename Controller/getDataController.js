@@ -99,15 +99,37 @@ const chunking = async (model_name, index_height, table_height) => {
 
 const chunking_egp = async (model_name = price_list_egp, index_height, table_height) => {
   try {
-    const distict_index_classification = await sequelize.query(`select distinct description_1,index_order from price_list_egp order by index_order`, { type: QueryTypes.SELECT });
-    let distict_product_classification = []
-    let obj = []
+    const distict_index_classification = await sequelize.query(
+      `select distinct description_1, index_order from price_list_egp order by index_order`,
+      { type: QueryTypes.SELECT }
+    );
 
-    await Promise.all(distict_index_classification.map(async (x) => {
-      distict_product_classification = await sequelize.query(`select distinct description_2 ,description_3 val,index_order,product_classification_index from price_list_egp ple where description_1 ='${x['description_1']}' order by index_order,product_classification_index`, { type: QueryTypes.SELECT });
-      await Promise.all(distict_product_classification.map(async (y) => {
-        const data_of_F_item_code = await sequelize.query(`select * from price_list_egp ple where description_3 ='${y['val']}' and description_1 ='${x['description_1']}' and item_code like '%F%' order by item_code_index `, { type: QueryTypes.SELECT });
-        const data_of_S_item_code = await sequelize.query(`select * from price_list_egp ple where description_3 ='${y['val']}' and description_1 ='${x['description_1']}' and item_code like '%S%' order by optional_item_index`, { type: QueryTypes.SELECT });
+    let distict_product_classification = [];
+    let obj = [];
+
+    for (const x of distict_index_classification) {
+      distict_product_classification = await sequelize.query(
+        `select a.description_3 val,* from (select distinct on (description_3) description_3,description_2, index_order, product_classification_index from price_list_egp ple where description_1 = '${x['description_1']}'  order by description_3,index_order, product_classification_index,description_2) a order by a.index_order,a.product_classification_index;`,
+        { type: QueryTypes.SELECT }
+      );
+
+      for (const y of distict_product_classification) {
+        const data_of_F_item_code = await sequelize.query(
+          `select * from price_list_egp ple where 
+          description_3 = '${y['val']}' and 
+          description_1 = '${x['description_1']}' and 
+          item_code like '%F%' order by item_code_index`,
+          { type: QueryTypes.SELECT }
+        );
+
+        const data_of_S_item_code = await sequelize.query(
+          `select * from price_list_egp ple where 
+          description_3 = '${y['val']}' and 
+          description_1 = '${x['description_1']}' and 
+          item_code like '%S%' order by item_code_index,optional_item_index`,
+          { type: QueryTypes.SELECT }
+        );
+
         obj.push({
           index_classifications: x['description_1'],
           parent_classfications: y['description_2'],
@@ -116,13 +138,12 @@ const chunking_egp = async (model_name = price_list_egp, index_height, table_hei
           F: data_of_F_item_code,
           S: data_of_S_item_code,
           total: data_of_F_item_code.length + data_of_S_item_code.length,
-        })
-      }))
-    }))
+        });
+      }
+    }
 
-    const flattenedData = obj.flat();
-
-    
+    const flattenedData = obj.flat();    
+   
     const groupedData = flattenedData.reduce((acc, item) => {
       const key = item.index_classifications;
       if (!acc[key]) {
@@ -132,7 +153,8 @@ const chunking_egp = async (model_name = price_list_egp, index_height, table_hei
       return acc;
     }, {});
 
-    
+     
+
     const maxTotal = 10;
     const result = {};
 
@@ -142,7 +164,7 @@ const chunking_egp = async (model_name = price_list_egp, index_height, table_hei
       result[classification] = [];
 
       for (const item of items) {    
-        if (currentTotal + item.total > maxTotal) {
+        if ((currentTotal + item.total > maxTotal) && currentGroup.length>=1) {
           result[classification].push(currentGroup);
           currentGroup = [];
           currentTotal = 0;
@@ -151,20 +173,38 @@ const chunking_egp = async (model_name = price_list_egp, index_height, table_hei
         currentGroup.push(item);
         currentTotal += item.total;
       }
-      if (currentGroup.length > 0) {
+      if (currentGroup.length >= 1) {
         result[classification].push(currentGroup);
       }
     }
-    let page_no=0
+
+    let to = ""
+    let from = 1
+    let start_pg=0
+    let end_pg = 0
+    let temp=""
     const index = Object.entries(result).map((x, y) => {
       let occurance = x[1].length
-      page_no = occurance+page_no
-      return ({ attr: x[0], occurance:x[1].length,page_no});
+      if (String(y) === "0") {
+        start_pg = 1
+        end_pg=occurance
+        temp=occurance
+      } else {
+        start_pg = start_pg + (occurance === 1 ? temp +1: temp) 
+        end_pg = start_pg + (occurance ===1?0:occurance)
+        temp=occurance
+      }
+
+      return {
+        attr:x[0],
+        start_pg,
+        end_pg: end_pg === start_pg ? "" : end_pg
+      }
     })
 
     let final_result=[]
     Object.entries(result).map(y => {
-      if (Number(y[1].length) <= 1) {
+      if (Number(y[1].length) === 1) {
         final_result.push({ attributes:y[0],val:y[1].flat()})
     }
       else {
@@ -173,8 +213,10 @@ const chunking_egp = async (model_name = price_list_egp, index_height, table_hei
         })
       }
     })
-
-    return {_final_data:final_result,index}
+    
+    return { index, _final_data: final_result }
+    // return { index, _final_data: obj }
+    
   } catch (error) {
     console.log(error);
   }
@@ -254,8 +296,11 @@ exports.get_pricelist_headers = async (req, res) => {
         id: pname,
       },
     });
-    res.status(200).json(val);
+    if (val) {
+      return res.status(200).json(val);
+    }
+    return res.status(404)
   } catch (error) {
-    res.status(400).json({ error: error });
+    return res.status(404).json({ error: error });
   }
 };

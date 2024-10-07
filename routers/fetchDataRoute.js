@@ -4,10 +4,8 @@ const { verifyJWToken } = require('../Controller/AuthController')
 const insertDataInDBRouter = express.Router()
 require('dotenv').config('../.env')
 
-// insertDataInDBRouter.get('/get', insertDataInDB)
-// insertDataInDBRouter.get('/chunk', verifyJWToken, chunking)
-insertDataInDBRouter.post('/data/by/pricelist', getData)
+insertDataInDBRouter.post('/data/by/pricelist', verifyJWToken, getData)
+insertDataInDBRouter.post('/get/header/pricelist',verifyJWToken, get_pricelist_headers)
 insertDataInDBRouter.post('/create/header/pricelist', insert_into_pricelist_headers)
-insertDataInDBRouter.post('/get/header/pricelist', get_pricelist_headers)
 
 module.exports = insertDataInDBRouter

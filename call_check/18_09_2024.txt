@@ -1,0 +1,57 @@
+-18-09-2024 09:09:25---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 9.084 secs"}
+-----------
+-18-09-2024 09:09:50---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 7.891 secs"}
+-----------
+-18-09-2024 09:09:21---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 9.601 secs"}
+-----------
+-18-09-2024 09:09:08---------
+{"len":2650,"obj":"spares","time_take":"Took 11.475 secs"}
+-----------
+-18-09-2024 09:09:56---------
+{"len":308,"obj":"egp","time_take":"Took 12.942 secs"}
+-----------
+-18-09-2024 09:09:46---------
+{"len":1094,"obj":"hypertherm","time_take":"Took 7.744 secs"}
+-----------
+-18-09-2024 09:09:56---------
+{"len":251,"obj":"wires_and_flux","time_take":"Took 7.848 secs"}
+-----------
+-18-09-2024 10:09:60---------
+{"len":2650,"obj":"spares","time_take":"Took 8.888 secs"}
+-----------
+-18-09-2024 10:09:82---------
+{"len":308,"obj":"egp","time_take":"Took 12.103 secs"}
+-----------
+-18-09-2024 11:09:40---------
+{"len":0,"obj":"hypertherm","time_take":"Took 6.104 secs"}
+-----------
+-18-09-2024 11:09:60---------
+{"len":0,"obj":"spares","time_take":"Took 6.308 secs"}
+-----------
+-18-09-2024 11:09:01---------
+{"len":0,"obj":"wires_and_flux","time_take":"Took 6.72 secs"}
+-----------
+-18-09-2024 11:09:17---------
+{"len":0,"obj":"egp","time_take":"Took 8.87 secs"}
+-----------
+-18-09-2024 12:09:73---------
+{"len":0,"obj":"wires_and_flux","time_take":"Took 9.595 secs"}
+-----------
+-18-09-2024 12:09:25---------
+{"len":0,"obj":"hypertherm","time_take":"Took 10.209 secs"}
+-----------
+-18-09-2024 12:09:84---------
+{"len":0,"obj":"spares","time_take":"Took 10.803 secs"}
+-----------
+-18-09-2024 15:09:25---------
+{"len":0,"obj":"hypertherm","time_take":"Took 9.128 secs"}
+-----------
+-18-09-2024 15:09:35---------
+{"len":0,"obj":"wires_and_flux","time_take":"Took 9.231 secs"}
+-----------
+-18-09-2024 15:09:05---------
+{"len":0,"obj":"spares","time_take":"Took 9.927 secs"}
+-----------

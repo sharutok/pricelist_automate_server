@@ -1,7 +1,8 @@
 const authRoute = require('express').Router()
 
-const { generateToken } = require('../Controller/AuthController')
+const { generateToken,verifyJWToken } = require('../Controller/AuthController')
 
-authRoute.get('/toket-get', generateToken)
+authRoute.post('/toket-get', generateToken)
+authRoute.post("/verify/token", verifyJWToken)
 
 module.exports=authRoute

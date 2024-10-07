@@ -26,19 +26,23 @@ const UNIQUE_ITEM_HEADER_IN_PRICE_LIST = () => {
     `
 }
 const HYPERTHERM = () => {
-    const q =`SELECT
+    const q =`select * from (SELECT
         INFO_VALUE description_1,
-        ITEM_DESCRIPTION sub_product,
-        ITEM_CODE item,
+        ITEM_DESCRIPTION item,
+        ITEM_CODE sub_product,
         UOM uom,
         TO_NUMBER(TAG) index_order,
-        TO_CHAR(LIST_PRICE) list_price_as_per_uom,ITEM_CODE_INDEX item_code_index 
+        TO_CHAR(LIST_PRICE) list_price_as_per_uom,ITEM_CODE_INDEX item_code_index ,
+        to_date(UPDATED_LIST_PRICE_DATE, 'DD-MM-YYYY HH24:MI:SS') UPDATED_LIST_PRICE_DATE,
+        to_date(LIST_PRICE_CREATION_DATE, 'DD-MM-YYYY HH24:MI:SS') LIST_PRICE_CREATION_DATE,
+        LAST_UPDATE_DATE ,
+        CREATION_DATE
         FROM
-        CUS.ADOR_HYPERTHERM_V`
+        CUS.ADOR_HYPERTHERM_V) ADOR_HYPERTHERM_V`
     return q
 }
 const WIRES_FLUX = () => {
-    const q =`SELECT
+    const q =`select * from (SELECT
         INFO_VALUE description_1,
         ITEM_CODE item_code,
         CLASSIFICATION classification,
@@ -48,13 +52,17 @@ const WIRES_FLUX = () => {
         TO_CHAR(LIST_PRICE) list_price_as_per_uom,
         a.SZE "SIZE",
         TO_NUMBER(TAG) index_order,
-        TO_NUMBER(ITEM_CODE_INDEX) item_code_index 
+        TO_NUMBER(ITEM_CODE_INDEX) item_code_index ,
+        to_date(UPDATED_LIST_PRICE_DATE, 'DD-MM-YYYY HH24:MI:SS') UPDATED_LIST_PRICE_DATE,
+        to_date(LIST_PRICE_CREATION_DATE, 'DD-MM-YYYY HH24:MI:SS') LIST_PRICE_CREATION_DATE,
+        LAST_UPDATE_DATE ,
+        CREATION_DATE
         FROM
-        CUS.ADOR_WIRE_FLUX_V1 a`
+        CUS.ADOR_WIRE_FLUX_V1 a)ADOR_WIRE_FLUX_V `
     return q
 }
 const ELECTRODES = () => {
-    const q =`SELECT
+    const q =`select * from (SELECT
         INFO_VALUE description_1,
         ITEM_CODE item_code,
         CLASSIFICATION classification,
@@ -62,26 +70,36 @@ const ELECTRODES = () => {
         UOM uom,
         TO_CHAR(LIST_PRICE) list_price_as_per_uom,
         a.SZE "SIZE",
-        TO_NUMBER(TAG) index_order,ITEM_CODE_INDEX item_code_index 
+        TO_NUMBER(TAG) index_order,
+        ITEM_CODE_INDEX item_code_index ,
+        to_date(UPDATED_LIST_PRICE_DATE, 'DD-MM-YYYY HH24:MI:SS') UPDATED_LIST_PRICE_DATE,
+        to_date(LIST_PRICE_CREATION_DATE, 'DD-MM-YYYY HH24:MI:SS') LIST_PRICE_CREATION_DATE,
+        LAST_UPDATE_DATE,
+        CREATION_DATE
         FROM
-        CUS.ADOR_WELDING_ELECT_V1 a`
+        CUS.ADOR_WELDING_ELECT_V1 a) ADOR_WELDING_ELECT_V `
     return q
 }
 const SPARES = () => {
-    const q =` SELECT
+    const q =` select * from (SELECT
         PARENT_CLASSIFICATION description_2,
         INFO_VALUE description_1,
         ITEM_DESCRIPTION item,
         PRODUCT_CODE product_code,
         UOM uom,
         TO_CHAR(LIST_PRICE) list_price,
-        TO_NUMBER(TAG) index_order,ITEM_CODE_INDEX item_code_index 
+        TO_NUMBER(TAG) index_order,
+        ITEM_CODE_INDEX item_code_index,
+        to_date(UPDATED_LIST_PRICE_DATE, 'DD-MM-YYYY HH24:MI:SS') UPDATED_LIST_PRICE_DATE,
+        to_date(LIST_PRICE_CREATION_DATE, 'DD-MM-YYYY HH24:MI:SS') LIST_PRICE_CREATION_DATE,
+        LAST_UPDATE_DATE ,
+        CREATION_DATE 
         FROM
-        CUS.ADOR_WELDING_SPARES_V`
+        CUS.ADOR_WELDING_SPARES_V)ADOR_WELDING_SPARES_V`
     return q
 }
 const EGP = () => {
-    const q = `SELECT
+    const q = `select * from (SELECT
             INDEX_CLASSIFICATION description_1,
             PARENT_CLASSIFICATION description_2,
             PRODUCT_CLASSIFICATION description_3,
@@ -94,9 +112,12 @@ const EGP = () => {
             CATEGORY category,
             LIST_PRICE list_price,
             ITEM_CODE_INDEX item_code_index,
-            OPTIONAL_ITEM_INDEX optional_item_index 
-        FROM
-        CUS.ADOR_WELDING_EQUIPT_GCP_PPE_V1`
+            OPTIONAL_ITEM_INDEX optional_item_index ,
+            to_date(UPDATED_LIST_PRICE_DATE, 'DD-MM-YYYY HH24:MI:SS') UPDATED_LIST_PRICE_DATE,
+            to_date(LIST_PRICE_CREATION_DATE, 'DD-MM-YYYY HH24:MI:SS') LIST_PRICE_CREATION_DATE,
+            to_date(LAST_UPDATE_DATE,'DD-MM-YYYY HH24:MI:SS')LAST_UPDATE_DATE,
+            to_date(CREATION_DATE,'DD-MM-YYYY HH24:MI:SS')CREATION_DATE FROM CUS.ADOR_WELDING_EQUIPT_GCP_PPE_V1)
+            ADOR_WELDING_EQUIPT_GCP_PPE_V`
     return q
 }
 

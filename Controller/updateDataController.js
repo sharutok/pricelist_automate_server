@@ -6,6 +6,7 @@ const moment = require("moment");
 const fs = require("fs");
 const path = require("path");
 const { SPARES, HYPERTHERM, WIRES_FLUX, ELECTRODES, EGP } = require("./OracleQueries");
+const schedule = require("node-schedule");
 
 exports.update_spares = async (req, res) => {
     const startTime = performance.now();
@@ -91,10 +92,10 @@ exports.update_egp = async (req, res) => {
 exports.update_all = async (req, res) => {
     try {
         const func = [
-            // "update_electrodes",
-            // "update_wires_and_flux",
-            // "update_spares",
-            // "update_hypertherm",
+            "update_electrodes",
+            "update_wires_and_flux",
+            "update_spares",
+            "update_hypertherm",
             "update_egp",       
         ]
         await Promise.all(func.map(async (x) => {
@@ -114,16 +115,8 @@ const update_data_in_pg_hypertherm = async (data) => {
             Object.entries(x).map((y) => {
                 return obj[y[0].toLowerCase()] = y[1]
             })
-            await Promise.all(await price_list_hypertherm.upsert(
-                obj,
-                {
-                    where: {
-                        item: obj.item,
-                        item_code_index: obj.item_code_index,
-                        index_order: obj.index_order
-                    }
-                }
-            ))
+            await price_list_hypertherm.destroy({truncate: true,});
+            await price_list_hypertherm.create(obj)
         }))
     } catch (error) {
         console.log("error in update_data_in_pg_hypertherm", error);
@@ -137,16 +130,8 @@ const update_data_in_pg_wires_and_flux = async (data) => {
             Object.entries(x).map((y) => {
                 return obj[y[0].toLowerCase()] = y[1]
             })
-            await Promise.all(await price_list_wires_and_flux.upsert(
-                obj,
-                {
-                    where: {
-                        item_code: obj.item_code,
-                        index_order: obj.index_order,
-                        item_code_index: obj.item_code_index
-                    }
-                }
-            ))
+            await price_list_wires_and_flux.destroy({ truncate: true });
+            await price_list_wires_and_flux.create(obj)
         }))
     } catch (error) {
         console.log("error in update_data_in_pg_hypertherm", error);
@@ -162,18 +147,9 @@ const update_data_in_pg_electrodes = async (data) => {
             Object.entries(x).map((y) => {
                 return obj[y[0].toLowerCase()] = y[1]
             })
-           const{created}=await Promise.all( await price_list_electrode.upsert(
-               obj, {
-                   where: {
-                       item_code: obj.item_code,
-                       item_code_index: obj.item_code_index,
-                       index_order: obj.index_order,
-                   }
-                }
-           ))
-            // created ? created_list.push(created) : updated_list.push(created)
+            await price_list_electrode.destroy({ truncate: true });
+            await price_list_electrode.create(obj)
         }))
-        // console.log({ created_list: created_list.length, updated_list: updated_list.length });
     } catch (error) {
         console.log("error in update_data_in_pg_hypertherm", error);
     }
@@ -186,15 +162,8 @@ const update_data_in_pg_spares = async (data) => {
             Object.entries(x).map((y) => {
                 return obj[y[0].toLowerCase()] = y[1] 
             })
-            await Promise.all(await price_list_spares.upsert(
-                obj, {
-                    where: {
-                        product_code: obj.product_code,
-                        index_order: obj.index_order,
-                        item_code_index: obj.item_code_index,
-                    }
-            }
-            ))
+            await price_list_spares.destroy({ truncate: true });
+            await price_list_spares.create(obj)
         }))
     } catch (error) {
         console.log("error in update_data_in_pg_spares", error);
@@ -207,16 +176,8 @@ const update_data_in_pg_egp = async (data) => {
             const obj = {}
             Object.entries(x).map((y) => {return obj[y[0].toLowerCase()] = y[1]
             })
-             await price_list_egp.upsert(
-                 obj, {
-                     where:
-                     {
-                         item_code: obj.item_code,
-                         index_order: obj.index_order,
-                         item_code_index: obj.item_code_index,
-                     }
-             }
-            )
+            await price_list_egp.destroy({ truncate: true });
+             await price_list_egp.create(obj)
         }))
     } catch (error) {
         console.log("error in update_data_in_pg_spares", error);
@@ -240,10 +201,31 @@ const _log =async (data) => {
 };
 
 const oracle_query = async (_q) => {
+    const start_timestamp = moment().subtract(3, 'hours').format('YYYY-MM-DD HH:MM:SS')
+    const end_timestamp = moment().format('YYYY-MM-DD HH:MM:SS')
     let condition=""
     condition = "where rownum <= 1000000000000"
-    // condition ='where UPDATED_LIST_PRICE_DATE or LIST_PRICE_CREATION_DATE or LAST_UPDATE_DATE or CREATION_DATE '
+    // condition =`where UPDATED_LIST_PRICE_DATE BETWEEN TO_TIMESTAMP('${start_timestamp}', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('${end_timestamp}', 'YYYY-MM-DD HH24:MI:SS')OR
+    //             LIST_PRICE_CREATION_DATE BETWEEN TO_TIMESTAMP('${start_timestamp}', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('${end_timestamp}', 'YYYY-MM-DD HH24:MI:SS')OR
+    //             LAST_UPDATE_DATE BETWEEN TO_TIMESTAMP('${start_timestamp}', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('${end_timestamp}', 'YYYY-MM-DD HH24:MI:SS')OR
+    //             CREATION_DATE BETWEEN TO_TIMESTAMP('${start_timestamp}', 'YYYY-MM-DD HH24:MI:SS') AND TO_TIMESTAMP('${end_timestamp}', 'YYYY-MM-DD HH24:MI:SS')`
     q = _q + " " + condition
     const { rows } = await NORMAL_ORACLE_MASTER_DEV(q);
     return rows
 }
+
+schedule.scheduleJob("0 6-20/3 * * *", () => {
+    try {
+        console.log("started the scheduller");
+        this.update_all()
+    } catch (error) {
+        console.log("error in running scheduller",error);
+    }
+});
+
+
+
+
+
+
+

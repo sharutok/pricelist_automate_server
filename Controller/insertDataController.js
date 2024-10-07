@@ -47,11 +47,11 @@ exports.INSERT_DATA_FROM_XL_TO_DB_HYPERTHERM = async (req, res) => {
         json_data.map(async (val) => {
 
             await model_name.create({
-                sub_product: val["Brandname"],
+                sub_product: val["Item Code"],
                 uom: val["UoM"],
                 list_price_as_per_uom: String(val["List Price as per UoM"]),
                 description_1: val["desc1"],
-                item: val["Item Code"],
+                item: val["Brandname"],
             });
         })
     );
